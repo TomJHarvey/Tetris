@@ -14,6 +14,8 @@ Counter::Counter(): Thread ("CounterThread")
 {
     
     listener = nullptr;
+    
+
 }
 
 
