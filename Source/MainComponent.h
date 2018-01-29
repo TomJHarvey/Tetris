@@ -82,6 +82,8 @@ private:
     std::vector <int> currentYpositions;
     vector<vector <int>> gridValues;
     
+    int testCounter = 0;
+    
     int tetriminoWidthAndHeight[7][2] = {
         
         {152,38},   // i

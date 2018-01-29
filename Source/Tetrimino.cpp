@@ -53,7 +53,6 @@ void Tetrimino::setType(int type, int size)
             yPosition[i] = oYdimensions[i];
         }
     }
-    
 }
 void Tetrimino::getGridInformation(std::vector<std::vector <int >> gridValues, int tetriminoXposition, int tetriminoYposition)
 {

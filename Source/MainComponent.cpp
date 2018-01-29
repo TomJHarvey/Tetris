@@ -93,6 +93,8 @@ void MainContentComponent::counterChanged (int counterValue_)
     if (pieceHasLanded == true){
         isPieceFalling = false;
     }
+    
+    testCounter ++;
 }
 
 void MainContentComponent::createNewPiece()
@@ -127,7 +129,7 @@ void MainContentComponent::createNewPiece()
         }
     }
     
-    //tetriminoType = 0;                                            // Set type for testing purposes
+    tetriminoType = 4;                                            // Set type for testing purposes
     
     // Checks to see if the component has the correct default width and height
     
@@ -210,10 +212,11 @@ void MainContentComponent::moveTetrimino(int downIncrement, int leftOrRightIncre
     int yValue = 0;
     int xValue = 0;
     bool tetriminoCanMove = true;
+
     
     for (int i = 0; i < 4; i ++)
     {
-        xValue = ((currentXpositions[i] / 38) - 3) + (leftOrRightIncrement/38);
+        xValue = ((currentXpositions[i] / 38) - 3) + (leftOrRightIncrement/38);     // this checks to see if each sqaure of the tetrimino will hit another piece if moved left or right
         yValue = (currentYpositions[i] / 38) + (downIncrement/38);
         
         if (yValue == 21) {
@@ -225,7 +228,9 @@ void MainContentComponent::moveTetrimino(int downIncrement, int leftOrRightIncre
             tetriminoCanMove = false;
         }
     }
-    
+
+    //std::cout << testCounter << "Y before = " << tetrimino.getY() << std::endl;
+
     if (tetriminoCanMove == true)
     {
         currentTetriminoXposition += leftOrRightIncrement;  // move the piece left or right
@@ -241,9 +246,10 @@ void MainContentComponent::moveTetrimino(int downIncrement, int leftOrRightIncre
             canPieceFallFurther = false;
         }
     }
-    
+
     currentXpositions = tetrimino.returnXorYPositions(tetrimino.getX(), tetrimino.getWidth(), 0);
     currentYpositions = tetrimino.returnXorYPositions(tetrimino.getY(), tetrimino.getWidth(), 1);
+    //std::cout << testCounter << "Y After = " << tetrimino.getY() << std::endl;
 }
 
 void MainContentComponent::drawTetriminoOnGrid()
@@ -355,7 +361,7 @@ void MainContentComponent::rotateTetrimino()
         yOffset = - 38;
     }
     
-    tetrimino.getGridInformation(gridValues, tetrimino.getX(), tetrimino.getY());
+    tetrimino.getGridInformation(gridValues, tetrimino.getX() + xOffset, tetrimino.getY() + yOffset);
     
     if (tetrimino.rotateShape(tetriminoType) == true)
     {
@@ -363,7 +369,9 @@ void MainContentComponent::rotateTetrimino()
         int sizeCopy1 = tetriminoWidthAndHeight[tetriminoType][1];
         tetriminoWidthAndHeight[tetriminoType][0] = sizeCopy1;
         tetriminoWidthAndHeight[tetriminoType][1] = sizeCopy0;
-        tetrimino.setBounds(currentTetriminoXposition + xOffset, (numberOfSquaresFallen) + yOffset, tetriminoWidthAndHeight[tetriminoType][0], tetriminoWidthAndHeight[tetriminoType][1]);
+        currentTetriminoXposition += xOffset;
+        numberOfSquaresFallen += yOffset;
+        tetrimino.setBounds(currentTetriminoXposition, numberOfSquaresFallen, tetriminoWidthAndHeight[tetriminoType][0], tetriminoWidthAndHeight[tetriminoType][1]);
         currentXpositions = tetrimino.returnXorYPositions(tetrimino.getX(), tetrimino.getWidth(), 0);
         currentYpositions = tetrimino.returnXorYPositions(tetrimino.getY(), tetrimino.getWidth(), 1);
     }
@@ -428,14 +436,7 @@ void MainContentComponent::paint (Graphics& g)
     // Next tetrimino
     g.drawRect(511, 40, 80, 80);
     g.fillRect(511, 40, 80, 80);
-    
-    
-    
-    
-    
-    
-    
-    
+
 }
 
 void MainContentComponent::resized()
