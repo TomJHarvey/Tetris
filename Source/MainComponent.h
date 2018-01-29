@@ -14,7 +14,10 @@
 #include "Tetrimino.h"
 #include "DrawTetriminos.h"
 
-
+#define ONESQUARE 38;
+#define TWOSQUARES 76;
+#define THREESQUARES 38;
+#define FOURSQUARES 38;
 
 
 //==============================================================================
@@ -47,6 +50,7 @@ public:
 private:
     
     int lineSpace = 38;
+    int lineSpace1 = ONESQUARE;
     Path horizontalLines[16];
     Path verticalLines[21];
     Label holdLabel;

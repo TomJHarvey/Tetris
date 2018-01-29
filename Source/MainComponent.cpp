@@ -129,7 +129,7 @@ void MainContentComponent::createNewPiece()
         }
     }
     
-    tetriminoType = 4;                                            // Set type for testing purposes
+    //tetriminoType = 4;                                            // Set type for testing purposes
     
     // Checks to see if the component has the correct default width and height
     
@@ -280,7 +280,7 @@ void MainContentComponent::drawTetriminoOnGrid()
 
 bool MainContentComponent::keyPressed(const KeyPress &key, Component* originatingComponent )
 {
-    DBG(key.getKeyCode());
+    //DBG(key.getKeyCode());
     
     if (pieceCanBeMoved == true)
     {

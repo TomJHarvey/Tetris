@@ -12,6 +12,7 @@
 #define DRAWTETRIMINOS_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "MainComponent.h"
 using std::vector;
 using std::cout;
 
