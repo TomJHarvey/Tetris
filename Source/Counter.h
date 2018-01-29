@@ -68,12 +68,6 @@ public:
          */
         virtual void counterChanged (int counterValue_) = 0;
         
-        /** resets the sequence when the stop button is pressed or it reaches the end of the sequence
-         
-         @parm buttonType_
-         
-         */
-        virtual void resetSequence(int buttonType_) = 0;
         
     };
     

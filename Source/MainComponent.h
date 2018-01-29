@@ -39,12 +39,13 @@ public:
     void rotateTetrimino();
     void randomTetrimino();
     void drawNextTetriminos();
+    void drawHoldPiece();
+    void increaseScore(int numberOfLines);
     
     
     /** Updates the sequence based on the main thread counter position.*/
     void counterChanged (int counterValue_) override;
-    /** Resets the sequence when the stop button is pressed.*/
-    void resetSequence(int buttonType_) override;
+    void resetSequence(int buttonType_);
     bool keyPressed(const KeyPress &key, Component* originatingComponent ) override;
     
 private:
@@ -58,10 +59,14 @@ private:
     Label goalLabel;
     Label levelNumber;
     Label goalNumber;
+    Label scoreLabel;
+    Label scoreNumber;
     Counter threadCounter;
     Tetrimino tetrimino;
     DrawTetrimino drawTetrimino;
-    Tetrimino nextTetriminos[5];
+    Tetrimino nextTetrimino;
+    Tetrimino holdTetrimino;
+    
     Random random;                      // generates the random tetrimino type
     int tetriminoRandomCounter = 0;
     int tetriiminoRandomTypes[7] = {0};
@@ -79,11 +84,20 @@ private:
     bool firstTimeHold = true;
     bool firstTimeRandom = true;
     bool pieceCanBeMoved = true;
-    int holdTetrimino = 0;
+    int holdTetriminoType = 0;
     std::vector <int> randomPieces;
     std::vector <int> currentXpositions;
     std::vector <int> currentYpositions;
     vector<vector <int>> gridValues;
+    
+    std::string score;
+    std::string level;
+    std::string Goal;
+    
+    int currentScore = 0;
+    int levelCounter = 0;
+    int levelGoals[4] = {50,10,10,10};
+    int levelSpeeds[4] = {500,100,50,25};
     
     int testCounter = 0;
     

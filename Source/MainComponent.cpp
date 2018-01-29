@@ -25,17 +25,18 @@ MainContentComponent::MainContentComponent()
     addAndMakeVisible(levelLabel);
     goalLabel.setText("Goal", sendNotification);
     addAndMakeVisible(goalLabel);
+    scoreLabel.setText("Score", sendNotification);
+    addAndMakeVisible(scoreLabel);
     levelNumber.setText("1", sendNotification);
     addAndMakeVisible(levelNumber);
+    scoreNumber.setText("0", sendNotification);
+    addAndMakeVisible(scoreNumber);
     goalNumber.setText("10", sendNotification);
     addAndMakeVisible(goalNumber);
     addAndMakeVisible(tetrimino);               // add the objects
     addAndMakeVisible(drawTetrimino);
-    addAndMakeVisible(nextTetriminos[0]);
-    addAndMakeVisible(nextTetriminos[1]);
-    addAndMakeVisible(nextTetriminos[2]);
-    addAndMakeVisible(nextTetriminos[3]);
-    addAndMakeVisible(nextTetriminos[4]);
+    addAndMakeVisible(nextTetrimino);
+    addAndMakeVisible(holdTetrimino);
     threadCounter.startCounter();               // Starts the counter in the future select the level to chnage the speed
     threadCounter.setSpeed(200);                // Sets the speed for the first level
     threadCounter.setListener(this);
@@ -72,6 +73,15 @@ void MainContentComponent::counterChanged (int counterValue_)
     {
         pieceCanBeMoved = false;
         drawTetriminoOnGrid();  // draw the tetrimino
+
+        for (int i = 0; i < 4; i ++)
+        {
+            if (currentYpositions[i] == 0)
+            {
+                resetSequence(0);
+            }
+        }
+        
     }
     
     if (isPieceFalling == false)    // if the piece has fallen and been drawn
@@ -117,20 +127,22 @@ void MainContentComponent::createNewPiece()
         {
             firstTimeHold = false;
             holdPiece = false;
-            holdTetrimino = tetriminoType;
+            holdTetriminoType = tetriminoType;
+            drawHoldPiece();
             randomTetrimino();
         }
         
         else                                                        // If it has been held before, it swaps the current piece with the last hold piece.
         {
             int copy = tetriminoType;
-            tetriminoType = holdTetrimino;
-            holdTetrimino = copy;
+            tetriminoType = holdTetriminoType;
+            holdTetriminoType = copy;
+            drawHoldPiece();
             holdPiece = false;
         }
     }
     
-    //tetriminoType = 4;                                            // Set type for testing purposes
+    //tetriminoType = 0;                                            // Set type for testing purposes
     
     // Checks to see if the component has the correct default width and height
     
@@ -255,9 +267,9 @@ void MainContentComponent::moveTetrimino(int downIncrement, int leftOrRightIncre
 
 void MainContentComponent::drawTetriminoOnGrid()
 {
-    bool haveLinesBeenCleared = drawTetrimino.updateDimensions(currentXpositions, currentYpositions, tetriminoType);    // Draws the new sqaures that have just been added
-    
-    if (haveLinesBeenCleared == false)                      // If no lines were cleared
+   int numberOfLinesCleared = drawTetrimino.updateDimensions(currentXpositions, currentYpositions, tetriminoType); // Draws the new sqaures that have just been added
+
+    if (numberOfLinesCleared == 0)                      // If no lines were cleared
     {
         int xValue = 0;
         int yValue = 0;
@@ -273,10 +285,27 @@ void MainContentComponent::drawTetriminoOnGrid()
     else
     {
         drawTetrimino.updateGrid(gridValues);               // If a 1 or more lines have been cleared the new positions in the grid are updated and moved in the vector.
+        increaseScore(numberOfLinesCleared);
     }
     
     isPieceFalling = false;                                 // A new piece can now be created once it has been drawn
     canPieceFallFurther = true;
+}
+
+void MainContentComponent::increaseScore(int numberOfLines)
+{
+    currentScore +=numberOfLines;
+    score = std::to_string(numberOfLines);
+    scoreNumber.setText(score, sendNotification);
+    
+    if (levelGoals[levelCounter] == currentScore)
+    {
+        levelCounter ++;
+        currentScore = 0;
+        threadCounter.setSpeed(levelSpeeds[levelCounter]);
+        // change goal and level;
+    }
+    
 }
 
 bool MainContentComponent::keyPressed(const KeyPress &key, Component* originatingComponent )
@@ -384,16 +413,30 @@ void MainContentComponent::rotateTetrimino()
 
 void MainContentComponent::drawNextTetriminos()
 {
-    
-    //    nextTetriminos[0].setType(randomPieces[1], 2);
-    //    nextTetriminos[0].setBounds(520, 48, 70, 70);
-    
+    // make the O piece more centered and the I more centered vertically
+    nextTetrimino.setType(randomPieces[1], 2);
+    nextTetrimino.setBounds(oneSquare * 13.8, oneSquare * 1.5, oneSquare * 4, oneSquare * 4);
+}
+
+void MainContentComponent::drawHoldPiece()
+{
+    holdTetrimino.setType(holdTetriminoType, 2);
+    holdTetrimino.setBounds(oneSquare * 0.8, oneSquare * 1.5, oneSquare * 4, oneSquare * 4);
 }
 
 void MainContentComponent::resetSequence(int buttonType_)
 {
     // this is called when the counter needs to start again, so when the game is over, or if its paused it will start from where it left off
     // change the arugments for both counter ones
+    
+    drawTetrimino.resetGrid();
+    for (int i = 0; i < gridValues.size(); i ++)
+    {
+        for (int j = 0; j < gridValues[i].size(); j ++)
+        {
+            gridValues[i][j] = -1;              // Sets each piece of the grid equal to -1 so it has no 'tetrimino type'
+        }
+    }
 }
 
 
@@ -445,11 +488,18 @@ void MainContentComponent::resized()
     // These sizes were origanally fixed, however to make it so it can be resized each of the values are based off the size of the main square
     
     holdLabel.setBounds(oneSquare/2, oneSquare * 0.5, twoSquares, oneSquare/2);
-    nextLabel.setBounds(oneSquare*13.5, oneSquare * 0.5, twoSquares, oneSquare/2);
+    nextLabel.setBounds(oneSquare * 13.5, oneSquare * 0.5, twoSquares, oneSquare/2);
+    
     levelLabel.setBounds(oneSquare/2, oneSquare * 14.5, twoSquares, 10);
     levelNumber.setBounds(oneSquare/2, oneSquare * 15, oneSquare * 2.5, oneSquare * 1.5);
+    
     goalLabel.setBounds(oneSquare/2, oneSquare * 16.5, twoSquares, 10);
     goalNumber.setBounds(oneSquare/2, oneSquare * 16.9, oneSquare * 2.5, oneSquare * 1.5);
+    
+    scoreLabel.setBounds(oneSquare * 13.5, oneSquare * 14.5, twoSquares, 10);
+    scoreNumber.setBounds(oneSquare * 13.5, oneSquare * 15, oneSquare * 2.5, oneSquare * 1.5);
+    
+    
     drawTetrimino.setBounds(0, 0, getWidth(), getHeight());
     
 }

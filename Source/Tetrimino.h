@@ -12,7 +12,7 @@
 #define TETRIMINO_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-constexpr int oneSquare = 45;
+constexpr int oneSquare = 28;
 constexpr int twoSquares = oneSquare * 2;
 constexpr int threeSquares = oneSquare * 3;
 constexpr int fourSquares = oneSquare * 4;
@@ -57,6 +57,7 @@ private:
     int oXdimensions[4] = {0,oneSquare,0,oneSquare};
     int oYdimensions[4] = {0,0,oneSquare,oneSquare};
     int typeOfTetriminoForLoopSize = 0;
+    int normalPieceOrIhold = 4;
     
     
     std::vector<std::vector <int >> gridValuesCopy;
@@ -88,7 +89,6 @@ private:
         {1,1,0,0,1,1}       // Z
         
     };
-    
     
 };
 

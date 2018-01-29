@@ -48,10 +48,22 @@ void DrawTetrimino::updateGrid(vector<vector <int>> &gridValuesReference)
     }
 }
 
-bool DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type)
+void DrawTetrimino::resetGrid()
+{
+    for (int i = 0; i < gridValues.size(); i ++)
+    {
+        for (int j = 0; j < gridValues[i].size(); j ++)
+        {
+            gridValues[i][j] = -1;           // Sets each piece of the grid equal to 0
+        }
+    }
+}
+
+int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type)
 {
     
     bool linesHaveBeenCleared = false;
+    numberOfLinesCleared = 0;
     
     for (int i = 0; i < 4; i ++)
     {
@@ -89,36 +101,31 @@ bool DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<i
             }
             repaint();
             linesHaveBeenCleared = true;
+            numberOfLinesCleared ++;
         }
     }
     
     repaint();
     
-    if (linesHaveBeenCleared == false)
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    return numberOfLinesCleared;
     
 }
 
 void DrawTetrimino::paint(Graphics& g)
 {
     for (int i = 0; i < 21; i ++)
-    {
-        for (int j = 0; j < 10; j ++)
         {
-            if (gridValues[i][j] != -1)
+            for (int j = 0; j < 10; j ++)
             {
-                g.setColour(tetriminoColorus[gridValues[i][j]]);
-                g.drawRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
-                g.fillRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
+                if (gridValues[i][j] != -1)
+                {
+                    g.setColour(tetriminoColorus[gridValues[i][j]]);
+                    g.drawRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
+                    g.fillRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
+                }
             }
         }
-    }
+
 }
 
 

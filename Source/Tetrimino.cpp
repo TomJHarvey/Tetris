@@ -28,6 +28,12 @@ void Tetrimino::setType(int type, int size)
     typeSelect = type;          // set the type
     squareSize = size;          // the square size can vary depending on if its a playing piece or as a hold or next piece
     rotateCounter = 0;
+    normalPieceOrIhold = 4;
+    
+    if (typeSelect == 0 && size == 2)
+    {
+        normalPieceOrIhold = 3;
+    }
     
     if (typeSelect == 0 || typeSelect == 1)
     {
@@ -231,7 +237,7 @@ void Tetrimino::paint(Graphics& g)
 {
     g.setColour(tetriminoColorus[typeSelect]);
     
-    for (int i = 0; i < 4; i ++)
+    for (int i = 0; i < normalPieceOrIhold; i ++)
     {
         g.drawRect(xPosition[i]/squareSize, yPosition[i]/squareSize, oneSquare/squareSize, oneSquare/squareSize);
         g.fillRect(xPosition[i]/squareSize, yPosition[i]/squareSize, oneSquare/squareSize, oneSquare/squareSize);

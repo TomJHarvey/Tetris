@@ -24,8 +24,6 @@ Counter::~Counter()
     stopThread(500);
     count.set(0);
     
-    
-    
 }
 
 void Counter::run()
@@ -77,7 +75,6 @@ void Counter::startCounter()
     else
     {
         stopThread(250);
-        listener -> resetSequence(0);
     }
 }
 
@@ -88,7 +85,6 @@ void Counter::stopCounter()
     
     stopThread(250);
     count.set(0);
-    listener -> resetSequence(1);
     
 }
 
