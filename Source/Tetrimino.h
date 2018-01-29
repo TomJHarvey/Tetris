@@ -12,7 +12,7 @@
 #define TETRIMINO_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include "MainComponent.h"
 
 
 class Tetrimino: public Component

@@ -24,6 +24,8 @@ Counter::~Counter()
     stopThread(500);
     count.set(0);
     
+    
+    
 }
 
 void Counter::run()
