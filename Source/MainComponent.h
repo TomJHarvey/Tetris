@@ -16,8 +16,8 @@
 
 #define ONESQUARE 38;
 #define TWOSQUARES 76;
-#define THREESQUARES 38;
-#define FOURSQUARES 38;
+#define THREESQUARES 114;
+#define FOURSQUARES 152;
 
 
 //==============================================================================
