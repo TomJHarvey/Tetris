@@ -12,14 +12,16 @@
 #define DRAWTETRIMINOS_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
+#include "Tetrimino.h"
 using std::vector;
 using std::cout;
+
 
 class DrawTetrimino: public Component
 {
 public:
-    
+
+
     DrawTetrimino();
     ~DrawTetrimino();
     bool updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type);

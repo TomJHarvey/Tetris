@@ -12,7 +12,10 @@
 #define TETRIMINO_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
+constexpr int oneSquare = 45;
+constexpr int twoSquares = oneSquare * 2;
+constexpr int threeSquares = oneSquare * 3;
+constexpr int fourSquares = oneSquare * 4;
 
 
 class Tetrimino: public Component
@@ -31,17 +34,14 @@ public:
     void getGridInformation(std::vector<std::vector <int >> gridValues, int tetriminoXposition, int tetriminoYposition);
     std::vector <int> returnXorYPositions(int tetriminoXorYPosition, int widthOrHeight, int type);
     
-
-    
-    
 private:
     
     int typeSelect = 0;                         // Selects what tetrimino is used
     int rotateCounter = 0;                      // Counts how many times the piece has been rotated
     int xPosition[4] = {0};                     // The x position of each of the 6 sqaures for all shapes apart from i and 0
     int yPosition[4] = {0};                     // The y position "...... "
-    int rowSelect[8] = {0,38,38,0,38,0,0,38};   // The cordinates of the staring position for the current rotation
-    int xOrYcordintates[3] = {0,38,76};         // The cordinates for the row or collum
+    int rowSelect[8] = {0,oneSquare,oneSquare,0,oneSquare,0,0,oneSquare};   // The cordinates of the staring position for the current rotation
+    int xOrYcordintates[3] = {0,oneSquare,twoSquares};         // The cordinates for the row or collum
     int xOrYdirection[4] = {1,1,-1,-1};         // The direction that the above x or y cordiates are drawn
     int xOrYstartPos[4] = {0,0,2,2};            // If it starts at the highest or lowest value for the x or y
     int squareSize = 0;
@@ -50,12 +50,12 @@ private:
     int xPositionCopy[6] = {0};
     int yPositionCopy[6] = {0};
     
-    int iXdimensionsFlat[4] = {0,38,76,114};
+    int iXdimensionsFlat[4] = {0,oneSquare,twoSquares,threeSquares};
     int iYdimensionsFlat[4] = {0,0,0,0};
     int iXdimensionsStanding[4] = {0,0,0,0};
-    int iYdimensionsStanding[4] = {0,38,76,114};
-    int oXdimensions[4] = {0,38,0,38};
-    int oYdimensions[4] = {0,0,38,38};
+    int iYdimensionsStanding[4] = {0,oneSquare,twoSquares,threeSquares};
+    int oXdimensions[4] = {0,oneSquare,0,oneSquare};
+    int oYdimensions[4] = {0,0,oneSquare,oneSquare};
     int typeOfTetriminoForLoopSize = 0;
     
     

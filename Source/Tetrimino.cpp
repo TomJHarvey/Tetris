@@ -176,10 +176,10 @@ bool Tetrimino::checkForRotatedShapeHittingOtherSqaures()
     {
         if (tetriminoSquaresChecker[typeSelect][i] == 1) // If there is a sqaure at this position
         {
-            yValue = (yPositionCopy[i] + tetriminoYpositionCopy) / 38;
-            xValue = ((xPositionCopy[i] + tetriminoXpositionCopy) / 38 ) - 3;
+            yValue = (yPositionCopy[i] + tetriminoYpositionCopy) / oneSquare;
+            xValue = ((xPositionCopy[i] + tetriminoXpositionCopy) / oneSquare ) - 3;
             
-            if (yValue >= 21 || yValue <= -1 || gridValuesCopy[yValue][xValue] != -1 || xValue >=10 || (xPositionCopy[i] + tetriminoXpositionCopy) >= 494 )  // fix this and find the problem earlier for the yvalues == to 21 and -1
+            if (yValue >= 21 || yValue <= -1 || gridValuesCopy[yValue][xValue] != -1 || xValue >=10)  // fix this and find the problem earlier for the yvalues == to 21 and -1
             {
                 return false; // piece wont rotate
             }
@@ -233,8 +233,8 @@ void Tetrimino::paint(Graphics& g)
     
     for (int i = 0; i < 4; i ++)
     {
-        g.drawRect(xPosition[i]/squareSize, yPosition[i]/squareSize, 38/squareSize, 38/squareSize);
-        g.fillRect(xPosition[i]/squareSize, yPosition[i]/squareSize, 38/squareSize, 38/squareSize);
+        g.drawRect(xPosition[i]/squareSize, yPosition[i]/squareSize, oneSquare/squareSize, oneSquare/squareSize);
+        g.fillRect(xPosition[i]/squareSize, yPosition[i]/squareSize, oneSquare/squareSize, oneSquare/squareSize);
     }
     
 }

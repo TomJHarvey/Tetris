@@ -55,8 +55,8 @@ bool DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<i
     
     for (int i = 0; i < 4; i ++)
     {
-        int xValue = (xDimensions[i] / 38) - 3;
-        int yValue = yDimensions[i]/38;
+        int xValue = (xDimensions[i] / oneSquare) - 3;
+        int yValue = yDimensions[i]/oneSquare;
         
         gridValues[yValue][xValue] = type;
         numberOfsquaresPerLine[yValue] ++;
@@ -114,8 +114,8 @@ void DrawTetrimino::paint(Graphics& g)
             if (gridValues[i][j] != -1)
             {
                 g.setColour(tetriminoColorus[gridValues[i][j]]);
-                g.drawRect((j + 3) * 38, i*38, 38, 38);
-                g.fillRect((j + 3) * 38, i*38, 38, 38);
+                g.drawRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
+                g.fillRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
             }
         }
     }

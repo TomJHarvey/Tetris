@@ -14,10 +14,10 @@
 #include "Tetrimino.h"
 #include "DrawTetriminos.h"
 
-#define ONESQUARE 38;
-#define TWOSQUARES 76;
-#define THREESQUARES 114;
-#define FOURSQUARES 152;
+//#define ONESQUARE 38
+//#define TWOSQUARES 76
+//#define THREESQUARES 114
+//#define FOURSQUARES 152
 
 
 //==============================================================================
@@ -49,8 +49,7 @@ public:
     
 private:
     
-    int lineSpace = 38;
-    int lineSpace1 = ONESQUARE;
+    int lineSpace = oneSquare;
     Path horizontalLines[16];
     Path verticalLines[21];
     Label holdLabel;
@@ -88,15 +87,17 @@ private:
     
     int testCounter = 0;
     
+    int defineArray [2];
+    
     int tetriminoWidthAndHeight[7][2] = {
         
-        {152,38},   // i
-        {76,76},    // o
-        {114,76},   // t
-        {114,76},   // j
-        {114,76},   // l
-        {114,76},   // s
-        {114,76}    // z
+        {fourSquares,oneSquare},   // i
+        {twoSquares,twoSquares},    // o
+        {threeSquares,twoSquares},   // t
+        {threeSquares,twoSquares},   // j
+        {threeSquares,twoSquares},   // l
+        {threeSquares,twoSquares},   // s
+        {threeSquares,twoSquares}    // z
     };
     
     Colour tetriminoColorus[7] =
