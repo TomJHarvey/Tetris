@@ -57,6 +57,18 @@ void DrawTetrimino::resetGrid()
             gridValues[i][j] = -1;           // Sets each piece of the grid equal to 0
         }
     }
+    
+    
+    for (int i = 0; i < 20; i ++)
+    {
+        numberOfsquaresPerLine[i] = 0;
+        for (int j = 0; j < 10; j ++)
+        {
+            valueOfSquaresPerLine[i][j] = 0;
+        }
+    }
+
+
 }
 
 int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type)

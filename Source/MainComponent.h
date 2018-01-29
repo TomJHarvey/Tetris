@@ -92,12 +92,12 @@ private:
     
     std::string score;
     std::string level;
-    std::string Goal;
+    std::string goal;
     
     int currentScore = 0;
     int levelCounter = 0;
-    int levelGoals[4] = {50,10,10,10};
-    int levelSpeeds[4] = {500,100,50,25};
+    int levelGoals[4] = {4,10,6,10};
+    int levelSpeeds[4] = {500,200,50,25};
     
     int testCounter = 0;
     

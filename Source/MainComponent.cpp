@@ -27,11 +27,13 @@ MainContentComponent::MainContentComponent()
     addAndMakeVisible(goalLabel);
     scoreLabel.setText("Score", sendNotification);
     addAndMakeVisible(scoreLabel);
-    levelNumber.setText("1", sendNotification);
+    level = std::to_string(levelCounter + 1);
+    levelNumber.setText(level, sendNotification);
     addAndMakeVisible(levelNumber);
     scoreNumber.setText("0", sendNotification);
     addAndMakeVisible(scoreNumber);
-    goalNumber.setText("10", sendNotification);
+    goal = std::to_string(levelGoals[levelCounter]);
+    goalNumber.setText(goal, sendNotification);
     addAndMakeVisible(goalNumber);
     addAndMakeVisible(tetrimino);               // add the objects
     addAndMakeVisible(drawTetrimino);
@@ -292,21 +294,6 @@ void MainContentComponent::drawTetriminoOnGrid()
     canPieceFallFurther = true;
 }
 
-void MainContentComponent::increaseScore(int numberOfLines)
-{
-    currentScore +=numberOfLines;
-    score = std::to_string(numberOfLines);
-    scoreNumber.setText(score, sendNotification);
-    
-    if (levelGoals[levelCounter] == currentScore)
-    {
-        levelCounter ++;
-        currentScore = 0;
-        threadCounter.setSpeed(levelSpeeds[levelCounter]);
-        // change goal and level;
-    }
-    
-}
 
 bool MainContentComponent::keyPressed(const KeyPress &key, Component* originatingComponent )
 {
@@ -424,12 +411,35 @@ void MainContentComponent::drawHoldPiece()
     holdTetrimino.setBounds(oneSquare * 0.8, oneSquare * 1.5, oneSquare * 4, oneSquare * 4);
 }
 
+void MainContentComponent::increaseScore(int numberOfLines)
+{
+    currentScore +=numberOfLines;
+    score = std::to_string(currentScore);
+    scoreNumber.setText(score, sendNotification);
+    
+    if (levelGoals[levelCounter] == currentScore)
+    {
+        levelCounter ++;
+        currentScore = 0;
+        score = std::to_string(currentScore);
+        scoreNumber.setText(score, sendNotification);
+        threadCounter.setSpeed(levelSpeeds[levelCounter]);
+        goal = std::to_string(levelGoals[levelCounter]);
+        goalNumber.setText(goal, sendNotification);
+        level = std::to_string(levelCounter + 1);
+        levelNumber.setText(level, sendNotification);
+        
+    }
+    
+}
+
 void MainContentComponent::resetSequence(int buttonType_)
 {
     // this is called when the counter needs to start again, so when the game is over, or if its paused it will start from where it left off
     // change the arugments for both counter ones
     
     drawTetrimino.resetGrid();
+    
     for (int i = 0; i < gridValues.size(); i ++)
     {
         for (int j = 0; j < gridValues[i].size(); j ++)
@@ -437,6 +447,20 @@ void MainContentComponent::resetSequence(int buttonType_)
             gridValues[i][j] = -1;              // Sets each piece of the grid equal to -1 so it has no 'tetrimino type'
         }
     }
+    
+    firstTimeHold = true;
+    
+    levelCounter = 0;
+    currentScore = 0;
+    score = std::to_string(currentScore);
+    scoreNumber.setText(score, sendNotification);
+    level = std::to_string(levelCounter);
+    levelNumber.setText(level, sendNotification);
+    goal = std::to_string(levelGoals[levelCounter]);
+    goalNumber.setText(goal, sendNotification);
+    threadCounter.setSpeed(levelSpeeds[levelCounter]);
+    
+    
 }
 
 
