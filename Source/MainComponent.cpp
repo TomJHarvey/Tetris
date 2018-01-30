@@ -40,7 +40,7 @@ MainContentComponent::MainContentComponent()
     addAndMakeVisible(nextTetrimino);
     addAndMakeVisible(holdTetrimino);
     threadCounter.startCounter();               // Starts the counter in the future select the level to chnage the speed
-    threadCounter.setSpeed(200);                // Sets the speed for the first level
+    threadCounter.setSpeed(levelSpeeds[levelCounter]);               // Sets the speed for the first level
     threadCounter.setListener(this);
     setWantsKeyboardFocus(true);                // Enable use of the keyboard
     addKeyListener(this);
@@ -75,6 +75,7 @@ void MainContentComponent::counterChanged (int counterValue_)
     {
         pieceCanBeMoved = false;
         drawTetriminoOnGrid();  // draw the tetrimino
+        holdHasBeenPressed = false;
 
         for (int i = 0; i < 4; i ++)
         {
@@ -132,6 +133,7 @@ void MainContentComponent::createNewPiece()
             holdTetriminoType = tetriminoType;
             drawHoldPiece();
             randomTetrimino();
+            holdHasBeenPressed = true;
         }
         
         else                                                        // If it has been held before, it swaps the current piece with the last hold piece.
@@ -141,6 +143,7 @@ void MainContentComponent::createNewPiece()
             holdTetriminoType = copy;
             drawHoldPiece();
             holdPiece = false;
+            holdHasBeenPressed = true;
         }
     }
     
@@ -342,8 +345,12 @@ bool MainContentComponent::keyPressed(const KeyPress &key, Component* originatin
         
         else if (key.getKeyCode() == 96)
         {
-            isPieceFalling = false;
-            holdPiece = true;
+            
+            if(holdHasBeenPressed == false)
+            {
+                isPieceFalling = false;
+                holdPiece = true;
+            }
         }
         
         pieceCanBeMoved = true;
@@ -373,9 +380,9 @@ void MainContentComponent::rotateTetrimino()
         xOffset = oneSquare;
     }
     
-    if (rotationCounter == 1 || rotationCounter == 3)
+    if (rotationCounter == 3)
     {
-        yOffset = -oneSquare;
+       xOffset = -oneSquare;
     }
     
     tetrimino.getGridInformation(gridValues, tetrimino.getX() + xOffset, tetrimino.getY() + yOffset);

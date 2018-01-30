@@ -14,12 +14,6 @@
 #include "Tetrimino.h"
 #include "DrawTetriminos.h"
 
-//#define ONESQUARE 38
-//#define TWOSQUARES 76
-//#define THREESQUARES 114
-//#define FOURSQUARES 152
-
-
 //==============================================================================
 /*
  This component lives inside our window, and this is where you should put all
@@ -84,6 +78,7 @@ private:
     bool firstTimeHold = true;
     bool firstTimeRandom = true;
     bool pieceCanBeMoved = true;
+    bool holdHasBeenPressed = false;
     int holdTetriminoType = 0;
     std::vector <int> randomPieces;
     std::vector <int> currentXpositions;

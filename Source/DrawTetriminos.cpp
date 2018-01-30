@@ -89,13 +89,8 @@ int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<in
     
     for (int i = 0; i < 21; i ++)
     {
-        
-        //std::cout << i << ": Number of sqaures per line = " << numberOfsquaresPerLine[i] << std::endl;
-        
         if (numberOfsquaresPerLine[i] == 10)
         {
-            //std::cout << i << ": Number of sqaures per line = " << numberOfsquaresPerLine[i] << std::endl;
-            
             numberOfsquaresPerLine[i] = 0;
             for (int j = 0; j < 10; j ++)
             {
@@ -137,7 +132,6 @@ void DrawTetrimino::paint(Graphics& g)
                 }
             }
         }
-
 }
 
 
