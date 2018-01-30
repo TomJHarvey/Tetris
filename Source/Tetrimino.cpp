@@ -28,6 +28,12 @@ void Tetrimino::setType(int type, int size)
     typeSelect = type;          // set the type
     squareSize = size;          // the square size can vary depending on if its a playing piece or as a hold or next piece
     rotateCounter = 0;
+    normalPieceOrIhold = 4;
+    
+    if (typeSelect == 0 && size == 2)
+    {
+        normalPieceOrIhold = 3;
+    }
     
     if (typeSelect == 0 || typeSelect == 1)
     {
@@ -176,10 +182,10 @@ bool Tetrimino::checkForRotatedShapeHittingOtherSqaures()
     {
         if (tetriminoSquaresChecker[typeSelect][i] == 1) // If there is a sqaure at this position
         {
-            yValue = (yPositionCopy[i] + tetriminoYpositionCopy) / 38;
-            xValue = ((xPositionCopy[i] + tetriminoXpositionCopy) / 38 ) - 3;
+            yValue = (yPositionCopy[i] + tetriminoYpositionCopy) / oneSquare;
+            xValue = ((xPositionCopy[i] + tetriminoXpositionCopy) / oneSquare ) - 3;
             
-            if (yValue >= 21 || yValue <= -1 || gridValuesCopy[yValue][xValue] != -1 || xValue >=10 || (xPositionCopy[i] + tetriminoXpositionCopy) >= 494 )  // fix this and find the problem earlier for the yvalues == to 21 and -1
+            if (yValue >= 21 || yValue <= -1 || gridValuesCopy[yValue][xValue] != -1 || xValue >=10)  // fix this and find the problem earlier for the yvalues == to 21 and -1
             {
                 return false; // piece wont rotate
             }
@@ -231,10 +237,10 @@ void Tetrimino::paint(Graphics& g)
 {
     g.setColour(tetriminoColorus[typeSelect]);
     
-    for (int i = 0; i < 4; i ++)
+    for (int i = 0; i < normalPieceOrIhold; i ++)
     {
-        g.drawRect(xPosition[i]/squareSize, yPosition[i]/squareSize, 38/squareSize, 38/squareSize);
-        g.fillRect(xPosition[i]/squareSize, yPosition[i]/squareSize, 38/squareSize, 38/squareSize);
+        g.drawRect(xPosition[i]/squareSize, yPosition[i]/squareSize, oneSquare/squareSize, oneSquare/squareSize);
+        g.fillRect(xPosition[i]/squareSize, yPosition[i]/squareSize, oneSquare/squareSize, oneSquare/squareSize);
     }
     
 }

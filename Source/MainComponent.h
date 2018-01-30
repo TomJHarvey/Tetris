@@ -14,12 +14,6 @@
 #include "Tetrimino.h"
 #include "DrawTetriminos.h"
 
-#define ONESQUARE 38;
-#define TWOSQUARES 76;
-#define THREESQUARES 38;
-#define FOURSQUARES 38;
-
-
 //==============================================================================
 /*
  This component lives inside our window, and this is where you should put all
@@ -39,18 +33,18 @@ public:
     void rotateTetrimino();
     void randomTetrimino();
     void drawNextTetriminos();
+    void drawHoldPiece();
+    void increaseScore(int numberOfLines);
     
     
     /** Updates the sequence based on the main thread counter position.*/
     void counterChanged (int counterValue_) override;
-    /** Resets the sequence when the stop button is pressed.*/
-    void resetSequence(int buttonType_) override;
+    void resetSequence(int buttonType_);
     bool keyPressed(const KeyPress &key, Component* originatingComponent ) override;
     
 private:
     
-    int lineSpace = 38;
-    int lineSpace1 = ONESQUARE;
+    int lineSpace = oneSquare;
     Path horizontalLines[16];
     Path verticalLines[21];
     Label holdLabel;
@@ -59,10 +53,14 @@ private:
     Label goalLabel;
     Label levelNumber;
     Label goalNumber;
+    Label scoreLabel;
+    Label scoreNumber;
     Counter threadCounter;
     Tetrimino tetrimino;
     DrawTetrimino drawTetrimino;
-    Tetrimino nextTetriminos[5];
+    Tetrimino nextTetrimino;
+    Tetrimino holdTetrimino;
+    
     Random random;                      // generates the random tetrimino type
     int tetriminoRandomCounter = 0;
     int tetriiminoRandomTypes[7] = {0};
@@ -80,23 +78,35 @@ private:
     bool firstTimeHold = true;
     bool firstTimeRandom = true;
     bool pieceCanBeMoved = true;
-    int holdTetrimino = 0;
+    bool holdHasBeenPressed = false;
+    int holdTetriminoType = 0;
     std::vector <int> randomPieces;
     std::vector <int> currentXpositions;
     std::vector <int> currentYpositions;
     vector<vector <int>> gridValues;
     
+    std::string score;
+    std::string level;
+    std::string goal;
+    
+    int currentScore = 0;
+    int levelCounter = 0;
+    int levelGoals[4] = {4,10,6,10};
+    int levelSpeeds[4] = {500,200,50,25};
+    
     int testCounter = 0;
+    
+    int defineArray [2];
     
     int tetriminoWidthAndHeight[7][2] = {
         
-        {152,38},   // i
-        {76,76},    // o
-        {114,76},   // t
-        {114,76},   // j
-        {114,76},   // l
-        {114,76},   // s
-        {114,76}    // z
+        {fourSquares,oneSquare},   // i
+        {twoSquares,twoSquares},    // o
+        {threeSquares,twoSquares},   // t
+        {threeSquares,twoSquares},   // j
+        {threeSquares,twoSquares},   // l
+        {threeSquares,twoSquares},   // s
+        {threeSquares,twoSquares}    // z
     };
     
     Colour tetriminoColorus[7] =

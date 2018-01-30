@@ -12,9 +12,10 @@
 #define DRAWTETRIMINOS_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainComponent.h"
+#include "Tetrimino.h"
 using std::vector;
 using std::cout;
+
 
 class DrawTetrimino: public Component
 {
@@ -22,30 +23,23 @@ public:
     
     DrawTetrimino();
     ~DrawTetrimino();
-    bool updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type);
+    int updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type);
     void updateGrid(vector<vector <int>> &gridValuesReference);
+    void resetGrid();
     void paint (Graphics&) override;
     
 private:
-    
-    //    Array<int> xPositions;
-    //    Array<int> yPositions;
-    //    Array<int> colour;
-    
+
     std::vector <int> xpositionsVector;
     std::vector <int> ypositionsVector;
     std::vector <int> coloursVector;
     std::vector <int> lineNumbers;
-    
-    
     vector<vector <int>> gridValues;
-    
     std::vector<std::vector <int>> heightsForEachCollum;
-    
-    
     int numberOfsquaresPerLine[20] = {0};   // This is how many blocks are per line. Once this is full a line will be cleared and this will be reset.
     int valueOfSquaresPerLine[20][10] = {0};
     int numberOfLinesCleared = 0;
+    bool resetSequence = false;
     
     Colour tetriminoColorus[7] =
     {
@@ -59,7 +53,6 @@ private:
     };
     
     int drawNew = 0;
-    
     
 };
 

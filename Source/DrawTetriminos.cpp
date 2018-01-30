@@ -48,15 +48,39 @@ void DrawTetrimino::updateGrid(vector<vector <int>> &gridValuesReference)
     }
 }
 
-bool DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type)
+void DrawTetrimino::resetGrid()
+{
+    for (int i = 0; i < gridValues.size(); i ++)
+    {
+        for (int j = 0; j < gridValues[i].size(); j ++)
+        {
+            gridValues[i][j] = -1;           // Sets each piece of the grid equal to 0
+        }
+    }
+    
+    
+    for (int i = 0; i < 20; i ++)
+    {
+        numberOfsquaresPerLine[i] = 0;
+        for (int j = 0; j < 10; j ++)
+        {
+            valueOfSquaresPerLine[i][j] = 0;
+        }
+    }
+
+
+}
+
+int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type)
 {
     
     bool linesHaveBeenCleared = false;
+    numberOfLinesCleared = 0;
     
     for (int i = 0; i < 4; i ++)
     {
-        int xValue = (xDimensions[i] / 38) - 3;
-        int yValue = yDimensions[i]/38;
+        int xValue = (xDimensions[i] / oneSquare) - 3;
+        int yValue = yDimensions[i]/oneSquare;
         
         gridValues[yValue][xValue] = type;
         numberOfsquaresPerLine[yValue] ++;
@@ -65,13 +89,8 @@ bool DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<i
     
     for (int i = 0; i < 21; i ++)
     {
-        
-        //std::cout << i << ": Number of sqaures per line = " << numberOfsquaresPerLine[i] << std::endl;
-        
         if (numberOfsquaresPerLine[i] == 10)
         {
-            //std::cout << i << ": Number of sqaures per line = " << numberOfsquaresPerLine[i] << std::endl;
-            
             numberOfsquaresPerLine[i] = 0;
             for (int j = 0; j < 10; j ++)
             {
@@ -89,36 +108,30 @@ bool DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<i
             }
             repaint();
             linesHaveBeenCleared = true;
+            numberOfLinesCleared ++;
         }
     }
     
     repaint();
     
-    if (linesHaveBeenCleared == false)
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    return numberOfLinesCleared;
     
 }
 
 void DrawTetrimino::paint(Graphics& g)
 {
     for (int i = 0; i < 21; i ++)
-    {
-        for (int j = 0; j < 10; j ++)
         {
-            if (gridValues[i][j] != -1)
+            for (int j = 0; j < 10; j ++)
             {
-                g.setColour(tetriminoColorus[gridValues[i][j]]);
-                g.drawRect((j + 3) * 38, i*38, 38, 38);
-                g.fillRect((j + 3) * 38, i*38, 38, 38);
+                if (gridValues[i][j] != -1)
+                {
+                    g.setColour(tetriminoColorus[gridValues[i][j]]);
+                    g.drawRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
+                    g.fillRect((j + 3) * oneSquare, i*oneSquare, oneSquare, oneSquare);
+                }
             }
         }
-    }
 }
 
 
