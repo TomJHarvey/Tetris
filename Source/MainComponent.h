@@ -84,7 +84,6 @@ private:
     std::vector <int> currentXpositions;
     std::vector <int> currentYpositions;
     vector<vector <int>> gridValues;
-    
     std::string score;
     std::string level;
     std::string goal;
@@ -119,9 +118,6 @@ private:
         Colours::green,
         Colours::red
     };
-    
-    
-    
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

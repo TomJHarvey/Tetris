@@ -68,7 +68,6 @@ void DrawTetrimino::resetGrid()
         }
     }
 
-
 }
 
 int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<int> yDimensions, int type)
@@ -76,7 +75,6 @@ int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<in
     
     bool linesHaveBeenCleared = false;
     numberOfLinesCleared = 0;
-    
     for (int i = 0; i < 4; i ++)
     {
         int xValue = (xDimensions[i] / oneSquare) - 3;
@@ -113,7 +111,6 @@ int DrawTetrimino::updateDimensions(std::vector <int> xDimensions,std::vector<in
     }
     
     repaint();
-    
     return numberOfLinesCleared;
     
 }
